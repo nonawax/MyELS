@@ -1,3 +1,4 @@
 * Admob 연결시
 http://selfinvestfriends.tistory.com/27 : 배너 다는 법이 편하게 나와있음
 http://superwony.tistory.com/14 매니페스토 등에 설정해야할 내용이 추가로 더 잘 나와있음
+    해당 내용 중 integer 변수에 들어있는 version정보는 페이지에 없어서 빼는게 낫다. 다른 곳에서 찾게되면 추가할 것.
