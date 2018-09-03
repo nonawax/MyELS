@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ninano.menucontext.MainActivity" >
+
+<!--     <item -->
+<!--         android:id="@+id/action_settings" -->
+<!--         android:orderInCategory="100" -->
+<!--         android:showAsAction="never" -->
+<!--         android:title="@string/action_settings"/> -->
+
+    <item
+        android:id="@+id/menuAdd"
+        android:title="@string/add" />
+    
+    <item
+        android:id="@+id/menuUpt"
+        android:title="@string/upt" />
+
+    <item
+        android:id="@+id/menuDel"
+        android:title="@string/del" />
+
+    <item
+        android:id="@+id/menuNoti"
+        android:title="@string/noti" />
+</menu>

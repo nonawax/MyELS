@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#777777"
+    android:rowCount="7"
+    android:columnCount="4"
+    android:orientation="vertical" 
+    >
+
+<!--     made 출력 -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_row="0"
+        android:layout_columnSpan="4"
+        android:gravity="end"
+        android:text="Powered by Ninano" 
+        android:textColor="#ffffff"/>
+
+<!--     Display -->
+    <TextView
+        android:id="@+id/tvDisp"
+        android:layout_height="60dp"
+        android:layout_gravity="fill_horizontal"
+        android:layout_row="1"        
+        android:layout_columnSpan="4"
+        android:gravity="end"
+        android:textSize="30sp"
+        android:background="#000000"
+        android:textColor="#ffffff"
+         />
+
+<!--     Non btn -->
+    <Button
+        android:layout_width="223dp"
+        android:layout_height="60dp"
+        android:layout_gravity="fill_horizontal"
+        android:layout_row="2"
+        android:layout_columnSpan="3"
+        />
+
+    <!-- Del -->
+    <Button
+        android:id="@+id/btnDel"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="2"
+        android:layout_column="3"
+        android:layout_gravity="fill_horizontal"
+        android:text="DEL"
+        android:onClick="mOnClick" 
+        />
+
+<!--     7 -->
+    <Button
+        android:id="@+id/btnNum7"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="3"
+        android:layout_column="0"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="7" />
+
+<!--     8 -->
+    <Button
+        android:id="@+id/btnNum8"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="3"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="8" />
+
+<!--     9 -->
+    <Button
+        android:id="@+id/btnNum9"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="3"
+        android:layout_column="2"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="9" />
+
+<!--     Div -->
+    <Button
+        android:id="@+id/btnDiv"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="3"
+        android:layout_column="3"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="÷" />
+
+    
+<!--     4 -->
+    <Button
+        android:id="@+id/btnNum4"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="4"
+        android:layout_column="0"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="4" />
+
+<!--     5 -->
+    <Button
+        android:id="@+id/btnNum5"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="4"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="5" />
+
+<!--     6 -->
+    <Button
+        android:id="@+id/btnNum6"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="4"
+        android:layout_column="2"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="6" />
+
+<!--     Mul -->
+    <Button
+        android:id="@+id/btnMul"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="4"
+        android:layout_column="3"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="×" />
+    
+<!--     1 -->
+    <Button
+        android:id="@+id/btnNum1"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="5"
+        android:layout_column="0"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="1" />
+
+<!--     2 -->
+    <Button
+        android:id="@+id/btnNum2"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="5"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="2" />
+
+<!--     3 -->
+    <Button
+        android:id="@+id/btnNum3"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="5"
+        android:layout_column="2"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="3" />
+
+<!--     Sub-->
+    <Button
+        android:id="@+id/btnSub"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="5"
+        android:layout_column="3"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="-" />    
+        
+    
+<!--     dot -->
+    <Button
+        android:id="@+id/btnDot"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="6"
+        android:layout_column="0"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="." />
+
+<!--     0 -->
+    <Button
+        android:id="@+id/btnNum0"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="6"
+        android:layout_column="1"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="0" />
+
+<!--     equal -->
+    <Button
+        android:id="@+id/btnEqual"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="6"
+        android:layout_column="2"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="=" />
+
+<!--     Add-->
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="80dp"
+        android:layout_height="65dp"
+        android:layout_row="6"
+        android:layout_column="3"
+        android:layout_gravity="fill_horizontal"
+        android:onClick="mOnClick"
+        android:text="+" />    
+    
+</GridLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40sp"
+        android:layout_marginTop="20sp"
+        android:text="교육감 후보 선호도 조사"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" 
+        >
+		
+        <Button
+            android:id="@+id/btnGo"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:onClick="mOnClick"
+            android:text="고후보" />
+
+        <Button
+            android:id="@+id/btnJo"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:onClick="mOnClick"
+            android:text="조후보" />
+
+        <Button
+            android:id="@+id/btnLee"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:onClick="mOnClick"
+            android:text="이후보" />
+
+        <Button
+            android:id="@+id/btnMun"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:onClick="mOnClick"
+            android:text="문후보" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        android:onClick="mOnClick"
+        android:text="선호도 조사결과" />
+    
+    <Button
+        android:id="@+id/btnCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30sp"
+        android:onClick="mOnClick"
+        android:text="전화걸기" />
+
+</LinearLayout>

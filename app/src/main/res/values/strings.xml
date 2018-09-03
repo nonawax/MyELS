@@ -2,4 +2,8 @@
     <string name="app_name">MyELS</string>
     <string name="banner_ad_unit_id">ca-app-pub-9716462781973217/4230746401</string>
     <string name="app_ad_unit_id">ca-app-pub-9716462781973217~8018798230</string>
+    <string name="add">추가</string>
+    <string name="upt">수정</string>
+    <string name="del">삭제</string>
+    <string name="noti">안내</string>
 </resources>
