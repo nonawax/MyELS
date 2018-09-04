@@ -2,6 +2,7 @@ package com.nonawax.myels;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -13,7 +14,9 @@ import android.widget.HorizontalScrollView;
 import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.nonawax.myels.code.Constants;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -23,6 +26,7 @@ public class MainActivity extends Activity {
     private HorizontalScrollView scrollView;
     private AdView mAdView;
     private static final String TAG = "MainActivity";
+    private static final String dataFileName = "ELS.data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,24 +65,33 @@ public class MainActivity extends Activity {
     }
 
     //추가클릭시_호출함수
-    //TODO
     private void insertElsData(){
-        FileOutputStream fos = null;
+        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+        intent.putExtra(Constants.MODE, Constants.MODE_I);
+        startActivity(intent);
+    }
+
+    //수정클릭시_호출함수
+    //TODO
+    private void updateElsData(){
+        FileInputStream fis = null;
         try {
-            fos = openFileOutput("ELS.DATA", Context.MODE_WORLD_WRITEABLE);
-            String str = "name:삼성1234||period:3||startDt:20180903||EndDt:20190103||KnocIn:50||Idx1:290";
-            fos.write(str.getBytes());
-            fos.close();
-            Toast.makeText(getApplication(), "ELS DATA Created ", Toast.LENGTH_SHORT).show();
+            fis = openFileInput(dataFileName);
+            byte[] txt = new byte[100];
+            fis.read(txt);
+            String str = new String(txt);
+            fis.close();
+
+            Toast.makeText(getApplication(), str, Toast.LENGTH_LONG).show();
 
         } catch (IOException e) {
             Toast.makeText(getApplication(), "파일 오류 발생", Toast.LENGTH_LONG).show();
         } finally {
             try {
-                if(fos != null)
-                    fos.close();
+                if(fis != null)
+                    fis.close();
             } catch (Exception e) {
-                Log.e(TAG, "insertElsData ERR");
+                Log.e(TAG, "updateElsData ERR");
                 e.printStackTrace();
             }
         }
@@ -115,11 +128,10 @@ public class MainActivity extends Activity {
 
         switch(item.getItemId()) {
             case R.id.menuAdd:
-                Toast.makeText(getApplicationContext(), "메뉴추가 클릭!", Toast.LENGTH_SHORT).show();
-                //TODO
                 insertElsData();
                 return true;
             case R.id.menuUpt:
+                updateElsData();
                 return true;
             case R.id.menuDel:
                 return true;

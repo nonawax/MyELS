@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <!-- Vitamin C Theme -->
+    <color name="colorOrnage">#FD7400</color>
+    <color name="colorYellow">#FFE11A</color>
+    <color name="colorGreenL1">#BEDB39</color>
+    <color name="colorGreenL2">#1F8A70</color>
+    <color name="colorGreenS">#3189A4</color>
+    <color name="colorGreenB">#004358</color>
+
 </resources>

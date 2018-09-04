@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        >
+        android:visibility="visible">
 
         <GridLayout
             android:layout_width="wrap_content"
@@ -44,15 +44,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_weight="1"
-        android:background="?android:attr/listDivider" />
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="@dimen/paddingS"
         android:layout_weight="1"
+        android:paddingBottom="@dimen/paddingS"
+        android:visibility="visible"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
 
