@@ -126,7 +126,7 @@ public class DetailActivity extends Activity {
             listVo = XmlUtil.getInstance().getData(fis);
             fis.close();
         } catch (Exception e) {
-            Toast.makeText(getApplication(), this.getClass().getMethods() + Constants.ERR, Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), this.getLocalClassName() + Constants.ERR, Toast.LENGTH_LONG).show();
 			Log.e(TAG, this.getClass().getMethods() + Constants.ERR);
 			e.printStackTrace();
         } finally {
