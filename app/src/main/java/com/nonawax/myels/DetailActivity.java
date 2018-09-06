@@ -52,7 +52,6 @@ public class DetailActivity extends Activity {
         switch (view.getId()) {
             case R.id.btnSave:
                 elsVO = new ElsVO();
-                elsVO.setId(0);
                 elsVO.setElsNm(strElsNm);
                 elsVO.setStartDt(strStartDt);
                 elsVO.setEndDt(strEndDt);
@@ -74,9 +73,14 @@ public class DetailActivity extends Activity {
 
             // 기존 데이터가 없을 경우 객체 생성
             if(listVo == null)
-            	listVo = new ElsVOList();
+                listVo = new ElsVOList();
+
+            // 기존 데이터가 없을 경우 객체 생성
+            if(listVo.getVoList() == null)
+            	listVo.setVoList(new ArrayList<ElsVO>());
 
             // 기존 데이터에 추가
+			elsVO.setId(XmlUtil.getInstance().getId(listVo));
             listVo.getVoList().add(elsVO);
 
             // Data저장
@@ -114,7 +118,6 @@ public class DetailActivity extends Activity {
 		ElsVOList listVo = null;
         try {
             //파일이 존재하지 않는 경우에는 생성
-
             File file = new File(getFilesDir().toString() + "/" + Constants.FILE_NM);
             if(!file.exists()){
                 file.createNewFile();

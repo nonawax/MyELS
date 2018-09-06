@@ -8,6 +8,7 @@ import com.nonawax.myels.vo.ElsVOList;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.simpleframework.xml.stream.NodeException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.FileInputStream;
@@ -58,14 +59,36 @@ public class XmlUtil {
     public ElsVOList getData(FileInputStream fis){
 		ElsVOList voList = null;
 
-        try{
+        try {
             voList = (ElsVOList) serializer.read(ElsVOList.class, fis);
+        }catch (NodeException ne){
+            //Document has no root element
+            return new ElsVOList();
         }catch (Exception e){
             Log.e(TAG, this.getClass().getMethods() + Constants.ERR);
             e.printStackTrace();
-            return voList;
+            return new ElsVOList();
         }
         return voList;
     }
 
+    /**
+     * 빈 id값 리턴
+     */
+    public int getId(ElsVOList voList) {
+        int id = 0;
+        boolean isExist = true;
+        List<ElsVO> list = voList.getVoList();
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            for (ElsVO vo : list ) {
+                if (vo.getId() == id) isExist = true;
+            }
+            if (isExist)
+                id++;
+            else
+                break;
+        }
+        return id;
+    }
 }

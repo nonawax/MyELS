@@ -7,11 +7,11 @@ import java.util.List;
 
 @Root
 public class ElsVOList {
-	public List getVoList() {
+	public List<ElsVO> getVoList() {
 		return voList;
 	}
 
-	public void setVoList(List voList) {
+	public void setVoList(List<ElsVO> voList) {
 		this.voList = voList;
 	}
 
