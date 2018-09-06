@@ -1,16 +1,23 @@
 package com.nonawax.myels.vo;
 
-public class ElsData {
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.List;
+
+@Root
+public class ElsVO {
     /*private static final ElsData ourInstance = new ElsData();
     static ElsData getInstance() {
         return ourInstance;
     }*/
-    public int getIdx() {
-        return idx;
+    public int getId() {
+        return id;
     }
 
-    public void setIdx(int idx) {
-        this.idx = idx;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getElsNm() {
@@ -37,9 +44,16 @@ public class ElsData {
         this.endDt = endDt;
     }
 
-    private int idx;        //key
+    @Element
+    private int id;        //key
+    @Element
     private String ElsNm;    //ELS 이름
+    @Element
     private String startDt; //청약일(시작일)
+    @Element
     private String endDt;   //만기일(종료일)
+
+
+
 
 }

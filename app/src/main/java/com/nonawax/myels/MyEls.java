@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.android.gms.ads.MobileAds;
 
 
-
 public class MyEls extends Application {
     private static final String TAG = "MyELS";
     @Override

@@ -5,6 +5,20 @@ http://superwony.tistory.com/14 매니페스토 등에 설정해야할 내용이
 
 * 메터리얼 테마 적용
 http://tlshenm.tistory.com/11
+styles.xml에 적용이 잘 안됨..
+- 적용값
+<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+- 미적용값
+<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+
 
 implementation 'com.google.android.material:material:1.0.0-rc01' : app모듈의 build.gradle에 적용해야 하는데 일단 제외
 해당 테마 적용은 https://codelabs.developers.google.com 에서 배울 수 있는데 일단 제외
+
+
+* 파일 저장위치
+/data/data/com.nonawax.myels/files/ELS.data
+
+* XML 파싱 관련 :VO랑 바로 매핑되어서 편함
+build.gradle(app모듈)
+implementation 'org.simpleframework:simple-xml:2.7.1'
