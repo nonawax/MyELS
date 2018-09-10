@@ -96,8 +96,6 @@ public class MainActivity extends Activity {
             }
         }
     }
-
-
     //개별_함수_END
 
     //Override_함수_START

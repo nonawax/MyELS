@@ -1,13 +1,16 @@
 package com.nonawax.myels;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.nonawax.myels.code.Constants;
@@ -19,13 +22,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class DetailActivity extends Activity {
     private String TAG = this.getClass().getName();
 
     ElsVO elsVO;
-    EditText elsNm, startDt, endDt;
+    EditText elsNm, edtStartDt, edtEndDt;
+    ImageButton btnStartDt, btnEndDt;
+    int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,8 +41,20 @@ public class DetailActivity extends Activity {
 
         //id값셋팅
         elsNm = (EditText) findViewById(R.id.edtElsNm);
-        startDt = (EditText) findViewById(R.id.edtStartDt);
-        endDt = (EditText) findViewById(R.id.edtEndDt);
+        edtStartDt = (EditText) findViewById(R.id.edtStartDt);
+        edtEndDt = (EditText) findViewById(R.id.edtEndDt);
+        btnStartDt = (ImageButton)findViewById(R.id.btnStartDt);
+        btnEndDt = (ImageButton)findViewById(R.id.btnEndDt);
+
+        //현재 날짜와 시간을 가져오기위한 Calendar 인스턴스 선언
+        Calendar cal = new GregorianCalendar();
+        mYear = cal.get(Calendar.YEAR);
+        mMonth = cal.get(Calendar.MONTH);
+        mDay = cal.get(Calendar.DAY_OF_MONTH);
+
+        //청약일, 만기일 기본 셋팅
+		edtStartDt.setText(mYear + "-" + mMonth + "-" + mDay);
+		edtEndDt.setText((mYear+3) + "-" + mMonth + "-" + mDay);
 
     }
 
@@ -46,18 +65,35 @@ public class DetailActivity extends Activity {
 
     public void mOnClick(View view) {
         String strElsNm = String.valueOf(elsNm.getText());
-        String strStartDt = String.valueOf(startDt.getText());
-        String strEndDt = String.valueOf(endDt.getText());
+        String strStartDt = String.valueOf(edtStartDt.getText()).replaceAll("-", "");
+        String strEndDt = String.valueOf(edtEndDt.getText()).replaceAll("-", "");
 
         switch (view.getId()) {
-            case R.id.btnSave:
+            case R.id.btnStartDt:  // 청약일 날짜 버튼
+				new DatePickerDialog(DetailActivity.this, mStartDateSetListener
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[0])
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[1])
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[2])).show();
+                break;
+
+			case R.id.btnEndDt:  // 마감일 날짜 버튼
+				new DatePickerDialog(DetailActivity.this, mEndDateSetListener
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[0])
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[1])
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[2])).show();
+				break;
+
+            case R.id.btnSave:  // 저장버튼 클릭시
+                //TODO 속성확정시 추가
                 elsVO = new ElsVO();
                 elsVO.setElsNm(strElsNm);
                 elsVO.setStartDt(strStartDt);
                 elsVO.setEndDt(strEndDt);
                 insertData(elsVO);
+                finish();
                 break;
-            case R.id.btnCancel:
+
+            case R.id.btnCancel:    //취소버튼 클릭시
                 finish();
                 break;
         }
@@ -142,4 +178,39 @@ public class DetailActivity extends Activity {
     }
 
 
+    //시작일 날짜대화상자 리스너
+	DatePickerDialog.OnDateSetListener mStartDateSetListener =
+		new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+			}
+		};
+
+	//종료일 날짜대화상자 리스너
+	// TODO
+	DatePickerDialog.OnDateSetListener mEndDateSetListener =
+		new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+				mYear = year;
+				mMonth = month;
+				mDay = dayOfMonth;
+				updateEditDate(R.id.btnStartDt);
+			}
+		};
+
+	//개별_함수_START
+	//날짜값셋팅_호출함수
+	private void updateEditDate(int id){
+		switch (id){
+			case R.id.btnStartDt:
+				edtStartDt.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
+				break;
+			case R.id.btnEndDt:
+				edtEndDt.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
+				break;
+		}
+	}
+	//개별_함수_END
 }
