@@ -1,20 +1,26 @@
 package com.nonawax.myels;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatSpinner;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.nonawax.myels.code.AssetSourceCode;
 import com.nonawax.myels.code.Constants;
 import com.nonawax.myels.util.XmlUtil;
+import com.nonawax.myels.vo.AssetVO;
 import com.nonawax.myels.vo.ElsVO;
 import com.nonawax.myels.vo.ElsVOList;
 
@@ -24,15 +30,16 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-public class DetailActivity extends Activity {
+public class DetailActivity extends AppCompatActivity {
     private String TAG = this.getClass().getName();
 
     ElsVO elsVO;
     EditText elsNm, edtStartDt, edtEndDt;
     ImageButton btnStartDt, btnEndDt;
     int mYear, mMonth, mDay;
+    AppCompatButton btnSave, btnCancel;
+	AppCompatSpinner spnAsset;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +52,9 @@ public class DetailActivity extends Activity {
         edtEndDt = (EditText) findViewById(R.id.edtEndDt);
         btnStartDt = (ImageButton)findViewById(R.id.btnStartDt);
         btnEndDt = (ImageButton)findViewById(R.id.btnEndDt);
+        btnSave = (AppCompatButton)findViewById(R.id.btnSave);
+        btnCancel = (AppCompatButton)findViewById(R.id.btnCancel);
+        spnAsset = (AppCompatSpinner)findViewById(R.id.spnAsset);
 
         //현재 날짜와 시간을 가져오기위한 Calendar 인스턴스 선언
         Calendar cal = new GregorianCalendar();
@@ -53,9 +63,42 @@ public class DetailActivity extends Activity {
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
         //청약일, 만기일 기본 셋팅
-		edtStartDt.setText(mYear + "-" + mMonth + "-" + mDay);
-		edtEndDt.setText((mYear+3) + "-" + mMonth + "-" + mDay);
+		edtStartDt.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
+		edtEndDt.setText((mYear+3) + "-" + (mMonth+1) + "-" + mDay);
+		edtStartDt.setInputType(InputType.TYPE_NULL);
+		edtEndDt.setInputType(InputType.TYPE_NULL);
 
+		//버튼_이벤트리스너
+		btnStartDt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnEndDt.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnCancel.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnSave.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+
+		//스피너 셋팅
+		AssetSourceCode asc = new AssetSourceCode();
+		ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, asc.getList());
+		spnAsset.setAdapter(arrayAdapter);
+		spnAsset.setPrompt("기초자산 선택");
     }
 
     @Override
@@ -72,14 +115,14 @@ public class DetailActivity extends Activity {
             case R.id.btnStartDt:  // 청약일 날짜 버튼
 				new DatePickerDialog(DetailActivity.this, mStartDateSetListener
 						, Integer.parseInt(edtStartDt.getText().toString().split("-")[0])
-						, Integer.parseInt(edtStartDt.getText().toString().split("-")[1])
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[1])-1
 						, Integer.parseInt(edtStartDt.getText().toString().split("-")[2])).show();
                 break;
 
 			case R.id.btnEndDt:  // 마감일 날짜 버튼
 				new DatePickerDialog(DetailActivity.this, mEndDateSetListener
 						, Integer.parseInt(edtEndDt.getText().toString().split("-")[0])
-						, Integer.parseInt(edtEndDt.getText().toString().split("-")[1])
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[1])-1
 						, Integer.parseInt(edtEndDt.getText().toString().split("-")[2])).show();
 				break;
 
@@ -183,7 +226,10 @@ public class DetailActivity extends Activity {
 		new DatePickerDialog.OnDateSetListener() {
 			@Override
 			public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
+				mYear = year;
+				mMonth = month;
+				mDay = dayOfMonth;
+				updateEditDate(R.id.btnStartDt);
 			}
 		};
 
@@ -196,7 +242,7 @@ public class DetailActivity extends Activity {
 				mYear = year;
 				mMonth = month;
 				mDay = dayOfMonth;
-				updateEditDate(R.id.btnStartDt);
+				updateEditDate(R.id.btnEndDt);
 			}
 		};
 

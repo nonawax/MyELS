@@ -15,6 +15,9 @@ styles.xml에 적용이 잘 안됨..
 implementation 'com.google.android.material:material:1.0.0-rc01' : app모듈의 build.gradle에 적용해야 하는데 일단 제외
 해당 테마 적용은 https://codelabs.developers.google.com 에서 배울 수 있는데 일단 제외
 
+* app >build.gradle 제외한 것
+
+
 * 아이콘
 https://material.io/tools/icons/?style=baseline
 http://makerj.tistory.com/180

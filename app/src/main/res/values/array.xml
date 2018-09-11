@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="assetSource">
+        <item>KOSPI200</item>
+        <item>S&amp;P500</item>
+        <item>HSCEI</item>
+        <item>EuroStoxx50</item>
+        <item>Nikkei225</item>
+        <item>DAX</item>
+        <item>WTI</item>
+        <item>브렌트유</item>
+        <item>삼성전자</item>
+        <item>카카오</item>
+    </string-array>
+</resources>

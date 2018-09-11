@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="paddingS">2dp</dimen>
+    <dimen name="marginS">2dp</dimen>
+    <dimen name="marginM">5dp</dimen>
+    <dimen name="marginL">10dp</dimen>
 </resources>
