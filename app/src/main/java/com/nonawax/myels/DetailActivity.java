@@ -11,16 +11,14 @@ import android.support.v7.widget.AppCompatSpinner;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.nonawax.myels.code.AssetSourceCode;
 import com.nonawax.myels.code.Constants;
 import com.nonawax.myels.util.XmlUtil;
-import com.nonawax.myels.vo.AssetVO;
 import com.nonawax.myels.vo.ElsVO;
 import com.nonawax.myels.vo.ElsVOList;
 
@@ -58,13 +56,23 @@ public class DetailActivity extends AppCompatActivity {
 
         //현재 날짜와 시간을 가져오기위한 Calendar 인스턴스 선언
         Calendar cal = new GregorianCalendar();
+        //금요일때까지 날짜 셋팅
+        while (cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY){
+        	cal.add(Calendar.DATE,1);
+		}
         mYear = cal.get(Calendar.YEAR);
         mMonth = cal.get(Calendar.MONTH);
         mDay = cal.get(Calendar.DAY_OF_MONTH);
 
-        //청약일, 만기일 기본 셋팅
+        //청약일 기본셋팅
 		edtStartDt.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
+
+		//만기일 기본셋팅
+		cal.add(Calendar.YEAR, 3);
+		cal.add(Calendar.DATE,-1);
 		edtEndDt.setText((mYear+3) + "-" + (mMonth+1) + "-" + mDay);
+
+		//날짜 수동수정 금지
 		edtStartDt.setInputType(InputType.TYPE_NULL);
 		edtEndDt.setInputType(InputType.TYPE_NULL);
 
@@ -95,10 +103,18 @@ public class DetailActivity extends AppCompatActivity {
 		});
 
 		//스피너 셋팅
-		AssetSourceCode asc = new AssetSourceCode();
-		ArrayAdapter arrayAdapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, asc.getList());
-		spnAsset.setAdapter(arrayAdapter);
 		spnAsset.setPrompt("기초자산 선택");
+		spnAsset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
     }
 
     @Override
