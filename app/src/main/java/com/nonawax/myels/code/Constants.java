@@ -11,5 +11,6 @@ public class Constants {
     public static String FILE_NM = "ELS_DATA.xml";
 
     //기타
-    public static final String ERR = "ERR";       //에러
+    public static final String ERR = "_ERR";       //에러
+    public static final String INFO = "_INFO";       //에러
 }

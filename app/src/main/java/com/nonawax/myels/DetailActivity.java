@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.nonawax.myels.code.Constants;
 import com.nonawax.myels.util.XmlUtil;
+import com.nonawax.myels.vo.AssetVO;
 import com.nonawax.myels.vo.ElsVO;
 import com.nonawax.myels.vo.ElsVOList;
 
@@ -28,6 +29,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
     private String TAG = this.getClass().getName();
@@ -148,6 +150,14 @@ public class DetailActivity extends AppCompatActivity {
                 elsVO.setElsNm(strElsNm);
                 elsVO.setStartDt(strStartDt);
                 elsVO.setEndDt(strEndDt);
+				AssetVO a1 = new AssetVO("KOSPI200", "2300.12");
+				AssetVO a2 = new AssetVO("HSCEI", "15000.34");
+				AssetVO a3 = new AssetVO("SAMSUNG", "40000.45");
+				ArrayList<AssetVO> assetList = new ArrayList<AssetVO>();
+				assetList.add(a1);
+				assetList.add(a2);
+				assetList.add(a3);
+				elsVO.setAssetVoList(assetList);
                 insertData(elsVO);
                 finish();
                 break;
@@ -164,19 +174,16 @@ public class DetailActivity extends AppCompatActivity {
 
         try {
             // 기존 데이터 읽어오기
-			ElsVOList listVo = getData();
+			List<ElsVO> listVo = getData();
 
             // 기존 데이터가 없을 경우 객체 생성
             if(listVo == null)
-                listVo = new ElsVOList();
+                listVo = new ArrayList<ElsVO>();
 
-            // 기존 데이터가 없을 경우 객체 생성
-            if(listVo.getVoList() == null)
-            	listVo.setVoList(new ArrayList<ElsVO>());
 
             // 기존 데이터에 추가
 			elsVO.setId(XmlUtil.getInstance().getId(listVo));
-            listVo.getVoList().add(elsVO);
+            listVo.add(elsVO);
 
             // Data저장
             fos = openFileOutput(Constants.FILE_NM, Context.MODE_WORLD_WRITEABLE);
@@ -208,9 +215,9 @@ public class DetailActivity extends AppCompatActivity {
      * 기존 데이터 읽어오기
      * @return 파일에서 읽은 데이터 List
      */
-    private ElsVOList getData() {
+    private List<ElsVO> getData() {
         FileInputStream fis = null;
-		ElsVOList listVo = null;
+		List<ElsVO> listVo = null;
         try {
             //파일이 존재하지 않는 경우에는 생성
             File file = new File(getFilesDir().toString() + "/" + Constants.FILE_NM);

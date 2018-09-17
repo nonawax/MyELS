@@ -7,14 +7,23 @@ import java.util.List;
 
 @Root
 public class ElsVOList {
+
+
+	@ElementList
+	private List<ElsVO> voList;
+
 	public List<ElsVO> getVoList() {
 		return voList;
 	}
-
-	public void setVoList(List<ElsVO> voList) {
+	public List<ElsVO> setVoList(List<ElsVO> voList) {
 		this.voList = voList;
+		return voList;
 	}
 
-	@ElementList(entry = "elsVO", inline = true)
-	private List<ElsVO> voList;
+	public ElsVOList(List<ElsVO> list){
+		voList = setVoList(list);
+	}
+
+	public ElsVOList(){
+	}
 }

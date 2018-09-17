@@ -13,6 +13,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XmlUtil {
@@ -39,11 +40,11 @@ public class XmlUtil {
      * @return 성공여부
      * @throws Exception
      */
-    public boolean insertData(ElsVOList voList, FileOutputStream fos) {
+    public boolean insertData(List<ElsVO> voList, FileOutputStream fos) {
         try{
-            serializer.write(voList, fos);
+            serializer.write(new ElsVOList(voList), fos);
         }catch (Exception e){
-            Log.e(TAG, this.getClass().getMethods() + Constants.ERR);
+            Log.e(TAG, this.getClass().getMethods().toString() + Constants.ERR);
             e.printStackTrace();
             return false;
         }
@@ -56,29 +57,32 @@ public class XmlUtil {
 	 * @return 저장된 리스트 객체
 	 * @throws Exception
 	 */
-    public ElsVOList getData(FileInputStream fis){
-		ElsVOList voList = null;
+    public List<ElsVO> getData(FileInputStream fis){
+        List<ElsVO> list = null;
+        ElsVOList voList = null;
 
         try {
             voList = (ElsVOList) serializer.read(ElsVOList.class, fis);
+//            list = voList.getVoList();
         }catch (NodeException ne){
             //Document has no root element
-            return new ElsVOList();
+            Log.i(TAG,  "Document has no root element"+ Constants.INFO);
+            return new ArrayList<ElsVO>();
         }catch (Exception e){
-            Log.e(TAG, this.getClass().getMethods() + Constants.ERR);
+            Log.e(TAG, this.getClass().getMethods().toString() + Constants.ERR);
             e.printStackTrace();
-            return new ElsVOList();
+            return new ArrayList<ElsVO>();
         }
-        return voList;
+        return voList.getVoList();
     }
 
     /**
      * 빈 id값 리턴
      */
-    public int getId(ElsVOList voList) {
+    public int getId(List<ElsVO> voList) {
         int id = 0;
         boolean isExist = true;
-        List<ElsVO> list = voList.getVoList();
+        List<ElsVO> list = voList;
         int size = list.size();
         for (int i = 0; i < size; i++) {
             for (ElsVO vo : list ) {

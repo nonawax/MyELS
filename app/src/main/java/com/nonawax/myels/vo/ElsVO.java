@@ -4,6 +4,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Root
@@ -52,8 +53,18 @@ public class ElsVO {
     private String startDt; //청약일(시작일)
     @Element
     private String endDt;   //만기일(종료일)
+    @ElementList
+    private  List<AssetVO> assetVoList;
 
+    public List<AssetVO> getAssetVoList() {
+        return assetVoList;
+    }
 
+    public void setAssetVoList(List<AssetVO> assetVoList) {
+        this.assetVoList = assetVoList;
+    }
 
-
+    public ElsVO(){
+        assetVoList = new ArrayList<AssetVO>();
+    }
 }
