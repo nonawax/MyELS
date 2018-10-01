@@ -1,0 +1,97 @@
+* XML 파싱 관련 :VO랑 바로 매핑되어서 편함
+build.gradle(app모듈)
+implementation 'org.simpleframework:simple-xml:2.7.1'
+
+elementList에서 생성자 에러가 발생하는 경우가 꽤 있음. 리스트내의 리스트 형태는 지금 구현한 내용 참고해야함.
+데이터 생성까지만 구현되어서 조회도 잘되는지는 확인못했으나 조회/저장이 되는 것으로 봐서 문제없을 것으로 생각됨.
+
+/**
+     * ELS 데이터 추가
+     * @param voList ELS 데이터
+     * @param fos Activity객체에서 넘겨주는 FileOutputStream
+     * @return 성공여부
+     * @throws Exception
+     */
+    public boolean insertData(List<ElsVO> voList, FileOutputStream fos) {
+        try{
+            serializer.write(new ElsVOList(voList), fos);
+        }catch (Exception e){
+            Log.e(TAG, this.getClass().getMethods().toString() + Constants.ERR);
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+/**
+	 * 기존 데이터 가져오기
+	 * @param fis Activity객체에서 넘겨주는 FileInputStream
+	 * @return 저장된 리스트 객체
+	 * @throws Exception
+	 */
+    public List<ElsVO> getData(FileInputStream fis){
+        ElsVOList voList = null;
+        try {
+            voList = (ElsVOList) serializer.read(ElsVOList.class, fis);
+        }catch (NodeException ne){
+            //Document has no root element
+            Log.i(TAG,  "Document has no root element"+ Constants.INFO);
+            return new ArrayList<ElsVO>();
+        }catch (Exception e){
+            Log.e(TAG, this.getClass().getMethods().toString() + Constants.ERR);
+            e.printStackTrace();
+            return new ArrayList<ElsVO>();
+        }
+        return voList.getVoList();
+    }
+
+아래는 VO 클래스
+@Root
+public class AssetVO {
+	@Element
+	private String name;
+	@Element
+	private String value;
+	public AssetVO(){  //생성자 없으면 오류발생
+    	}
+}
+
+@Root
+public class ElsVO {
+    @Element
+    private int id;        //key
+    @ElementList
+        private  List<AssetVO> assetVoList;
+
+        public List<AssetVO> getAssetVoList() {
+            return assetVoList;
+        }
+
+        public void setAssetVoList(List<AssetVO> assetVoList) {
+            this.assetVoList = assetVoList;
+        }
+        public ElsVO(){ //생성자 없으면 오류발생
+        }
+}
+
+@Root
+public class ElsVOList {
+    //파일 가져올 때 List타입으로 형변환이 되지 않아서 클래스를 하나 만들어야 한다.
+	@ElementList
+	private List<ElsVO> voList;
+
+	public List<ElsVO> getVoList() {
+		return voList;
+	}
+	public List<ElsVO> setVoList(List<ElsVO> voList) {
+		this.voList = voList;
+		return voList;
+	}
+
+	public ElsVOList(List<ElsVO> list){
+		voList = setVoList(list);
+	}
+
+	public ElsVOList(){     //생성자 없으면 오류발생
+	}
+}

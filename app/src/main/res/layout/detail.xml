@@ -69,9 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:text="만기일" />
 
             <android.support.v7.widget.AppCompatEditText
@@ -97,20 +97,28 @@
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자산1" />
+                android:text="자산1 이름/가격" />
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spnAsset"
+                android:id="@+id/spnAsset1Nm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:entries="@array/assetSource"
                 />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtAsset1Price"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="number" />
 
         </TableRow>
 
     </TableLayout>
+
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

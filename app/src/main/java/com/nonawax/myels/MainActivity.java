@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
         intent.putExtra(Constants.MODE, Constants.MODE_I);
         startActivity(intent);
+
     }
 
     //수정클릭시_호출함수

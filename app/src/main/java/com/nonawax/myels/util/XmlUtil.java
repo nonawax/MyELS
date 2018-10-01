@@ -58,12 +58,9 @@ public class XmlUtil {
 	 * @throws Exception
 	 */
     public List<ElsVO> getData(FileInputStream fis){
-        List<ElsVO> list = null;
         ElsVOList voList = null;
-
         try {
             voList = (ElsVOList) serializer.read(ElsVOList.class, fis);
-//            list = voList.getVoList();
         }catch (NodeException ne){
             //Document has no root element
             Log.i(TAG,  "Document has no root element"+ Constants.INFO);
@@ -95,4 +92,19 @@ public class XmlUtil {
         }
         return id;
     }
+
+	/**
+	 * id값 찾아서 ELS리스트의 idx값 리턴
+	 */
+	public int getXmlIdx(int elsId, List<ElsVO> voList){
+		int rstIdx = 0;
+		if(voList != null && voList.size() > 0){
+			for(int i = 0; i < voList.size() ; i++){
+				if(elsId == voList.get(i).getId()){
+					rstIdx = i;
+				}
+			}
+		}
+		return rstIdx;
+	}
 }

@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.ListViewCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,6 +42,13 @@ public class DetailActivity extends AppCompatActivity {
     int mYear, mMonth, mDay;
     AppCompatButton btnSave, btnCancel;
 	AppCompatSpinner spnAsset;
+	ListViewCompat listViewAsset;
+	List<ElsVO> listVo;	//파일에서 불러온 데이터 담을 객체
+	String detailMode;		//상세화면 모드
+	ArrayAdapter<AssetVO> adapter; //리스트뷰 어뎁터
+	int elsId;				//ELS ID
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +64,23 @@ public class DetailActivity extends AppCompatActivity {
         btnSave = (AppCompatButton)findViewById(R.id.btnSave);
         btnCancel = (AppCompatButton)findViewById(R.id.btnCancel);
         spnAsset = (AppCompatSpinner)findViewById(R.id.spnAsset);
+        listViewAsset = (ListViewCompat)findViewById(R.id.listViewAsset);
+
+
+        //인텐트에서 가져오기
+		Intent intent = getIntent();
+		detailMode = intent.getStringExtra(Constants.MODE);			//상세화면 모드값
+		elsId = intent.getIntExtra("elsId",-1);	//메인에서 선택된 elsId값
+
+		// 기존 데이터 읽어오기
+		getData();
+
+		// 기존 데이터가 없을 경우 객체 생성
+		if(listVo == null){
+			listVo = new ArrayList<ElsVO>();
+			ElsVO emptyVo = new ElsVO();
+			listVo.add(emptyVo);
+		}
 
         //현재 날짜와 시간을 가져오기위한 Calendar 인스턴스 선언
         Calendar cal = new GregorianCalendar();
@@ -117,11 +143,19 @@ public class DetailActivity extends AppCompatActivity {
 
 			}
 		});
-    }
 
-    @Override
-    public Intent getIntent() {
-        return super.getIntent();
+		try{
+			if(detailMode.equals(Constants.MODE_U)){
+				//수정모드일 경우 : 기존 자산리스트 찾아서 셋팅
+				int idx = XmlUtil.getInstance().getXmlIdx(elsId, listVo);
+				adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listVo.get(idx).getAssetVoList());
+			}
+		}catch (Exception e){
+			Toast.makeText(getApplication(), "자산리스트 구성 중 오류", Toast.LENGTH_LONG).show();
+			e.printStackTrace();
+		}
+
+
     }
 
     public void mOnClick(View view) {
@@ -173,13 +207,6 @@ public class DetailActivity extends AppCompatActivity {
         FileOutputStream fos = null;
 
         try {
-            // 기존 데이터 읽어오기
-			List<ElsVO> listVo = getData();
-
-            // 기존 데이터가 없을 경우 객체 생성
-            if(listVo == null)
-                listVo = new ArrayList<ElsVO>();
-
 
             // 기존 데이터에 추가
 			elsVO.setId(XmlUtil.getInstance().getId(listVo));
@@ -215,9 +242,8 @@ public class DetailActivity extends AppCompatActivity {
      * 기존 데이터 읽어오기
      * @return 파일에서 읽은 데이터 List
      */
-    private List<ElsVO> getData() {
+    private void getData() {
         FileInputStream fis = null;
-		List<ElsVO> listVo = null;
         try {
             //파일이 존재하지 않는 경우에는 생성
             File file = new File(getFilesDir().toString() + "/" + Constants.FILE_NM);
@@ -240,7 +266,6 @@ public class DetailActivity extends AppCompatActivity {
                 Log.getStackTraceString(e);
             }
         }
-        return listVo;
     }
 
 

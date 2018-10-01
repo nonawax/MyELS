@@ -25,8 +25,6 @@ http://makerj.tistory.com/180
 * 파일 저장위치
 /data/data/com.nonawax.myels/files/ELS.data
 
-* XML 파싱 관련 :VO랑 바로 매핑되어서 편함
-build.gradle(app모듈)
-implementation 'org.simpleframework:simple-xml:2.7.1'
+
 
 
