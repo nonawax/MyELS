@@ -11,13 +11,11 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:shrinkColumns="1"
         >
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
@@ -40,25 +38,26 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content" >
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvStartDt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="청약일" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtStartDt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:focusable="false"
-                android:inputType="none"
                 android:ems="10"
-                 />
+                android:focusable="false"
+                android:layout_weight="4"
+                android:inputType="none" />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btnStartDt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/date_icon" />
 
@@ -67,32 +66,36 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content" >
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvEndDt"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:clickable="true"
                 android:text="만기일" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtEndDt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:focusable="false"
-                android:inputType="none" />
+                android:inputType="none"
+                android:layout_weight="4"
+                />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btnEndDt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 app:srcCompat="@drawable/date_icon" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -102,18 +105,89 @@
                 android:text="자산1 이름/가격" />
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spnAsset1Nm"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:entries="@array/assetSource"
                 />
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtAsset1Price"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:ems="10"
-                android:focusable="false"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자산2 이름/가격" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnAsset2Nm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/assetSource"
+                android:layout_weight="1"
+                />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtAsset2Price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_weight="1"
+                android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자산3 이름/가격" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnAsset3Nm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/assetSource"
+                />
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtAsset3Price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_weight="1"
                 android:inputType="number" />
 
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="낙인 비율/no낙인" />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnKnockIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/fourtyToSixty"
+                />
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/chkKnockIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:layout_weight="1"
+                 />
         </TableRow>
 
     </TableLayout>
