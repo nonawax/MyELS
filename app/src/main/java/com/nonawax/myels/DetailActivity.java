@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatSpinner;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.ListViewCompat;
 import android.text.InputType;
 import android.util.Log;
@@ -23,7 +24,6 @@ import com.nonawax.myels.code.Constants;
 import com.nonawax.myels.util.XmlUtil;
 import com.nonawax.myels.vo.AssetVO;
 import com.nonawax.myels.vo.ElsVO;
-import com.nonawax.myels.vo.ElsVOList;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,13 +40,15 @@ public class DetailActivity extends AppCompatActivity {
     EditText elsNm, edtStartDt, edtEndDt;
     ImageButton btnStartDt, btnEndDt;
     int mYear, mMonth, mDay;
-    AppCompatButton btnSave, btnCancel;
-	AppCompatSpinner spnAsset;
-	ListViewCompat listViewAsset;
+    AppCompatButton btnSave, btnCancel, btnKnockInPoint, btnKnockInYn;
+	AppCompatSpinner spnAsset1Nm,spnAsset2Nm,spnAsset3Nm, spnKnockIn;
 	List<ElsVO> listVo;	//파일에서 불러온 데이터 담을 객체
 	String detailMode;		//상세화면 모드
 	ArrayAdapter<AssetVO> adapter; //리스트뷰 어뎁터
+	AppCompatTextView tvKnockIn,tvKnockInRto;
 	int elsId;				//ELS ID
+	boolean bKnockIn = false;
+
 
 
 
@@ -63,9 +65,14 @@ public class DetailActivity extends AppCompatActivity {
         btnEndDt = (ImageButton)findViewById(R.id.btnEndDt);
         btnSave = (AppCompatButton)findViewById(R.id.btnSave);
         btnCancel = (AppCompatButton)findViewById(R.id.btnCancel);
-        spnAsset = (AppCompatSpinner)findViewById(R.id.spnAsset);
-        listViewAsset = (ListViewCompat)findViewById(R.id.listViewAsset);
-
+		btnKnockInYn = (AppCompatButton)findViewById(R.id.btnKnockInYn);
+		btnKnockInPoint = (AppCompatButton)findViewById(R.id.btnKnockInPoint);
+		spnAsset1Nm = (AppCompatSpinner)findViewById(R.id.spnAsset1Nm);
+		spnAsset2Nm = (AppCompatSpinner)findViewById(R.id.spnAsset2Nm);
+		spnAsset3Nm = (AppCompatSpinner)findViewById(R.id.spnAsset3Nm);
+        spnKnockIn = (AppCompatSpinner)findViewById(R.id.spnKnockIn);
+		tvKnockIn = (AppCompatTextView) findViewById(R.id.tvKnockIn);
+        tvKnockInRto = (AppCompatTextView) findViewById(R.id.tvKnockInRto);
 
         //인텐트에서 가져오기
 		Intent intent = getIntent();
@@ -129,13 +136,37 @@ public class DetailActivity extends AppCompatActivity {
 				mOnClick(v);
 			}
 		});
+		btnKnockInPoint.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnKnockInYn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
 
-		//스피너 셋팅
-		spnAsset.setPrompt("기초자산 선택");
-		spnAsset.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+		//자산 1 스피너 셋팅
+		spnAsset1Nm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
+
+		//낙인 스피너 셋팅
+		spnKnockIn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				tvKnockInRto.setText((String) spnKnockIn.getSelectedItem());
 			}
 
 			@Override
@@ -164,12 +195,26 @@ public class DetailActivity extends AppCompatActivity {
         String strEndDt = String.valueOf(edtEndDt.getText()).replaceAll("-", "");
 
         switch (view.getId()) {
+			case R.id.tvStartDt:  // 청약일 날짜 버튼
+				new DatePickerDialog(DetailActivity.this, mStartDateSetListener
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[0])
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[1])-1
+						, Integer.parseInt(edtStartDt.getText().toString().split("-")[2])).show();
+				break;
+
             case R.id.btnStartDt:  // 청약일 날짜 버튼
 				new DatePickerDialog(DetailActivity.this, mStartDateSetListener
 						, Integer.parseInt(edtStartDt.getText().toString().split("-")[0])
 						, Integer.parseInt(edtStartDt.getText().toString().split("-")[1])-1
 						, Integer.parseInt(edtStartDt.getText().toString().split("-")[2])).show();
                 break;
+
+			case R.id.tvEndDt:  // 마감일 날짜 버튼
+				new DatePickerDialog(DetailActivity.this, mEndDateSetListener
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[0])
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[1])-1
+						, Integer.parseInt(edtEndDt.getText().toString().split("-")[2])).show();
+				break;
 
 			case R.id.btnEndDt:  // 마감일 날짜 버튼
 				new DatePickerDialog(DetailActivity.this, mEndDateSetListener
@@ -199,6 +244,33 @@ public class DetailActivity extends AppCompatActivity {
             case R.id.btnCancel:    //취소버튼 클릭시
                 finish();
                 break;
+			case R.id.btnKnockInPoint : 	//낙인포인트버튼 클릭시
+				//.5가 안 붙어있는 경우에만 뒤에 소수점 추가
+				if(tvKnockInRto.getText().toString().indexOf(".5") == -1){
+					String tempKnockIn = tvKnockInRto.getText().toString();
+					tempKnockIn += ".5";
+					tvKnockInRto.setText(tempKnockIn) ;
+				}
+				break;
+
+			case R.id.btnKnockInYn : 	//낙인여부버튼 클릭시
+
+				if(!bKnockIn){
+					tvKnockIn.setText("노낙인");
+					btnKnockInPoint.setClickable(false);
+					btnKnockInPoint.setVisibility(View.INVISIBLE);
+					spnKnockIn.setVisibility(View.INVISIBLE);
+					tvKnockInRto.setText("");
+				}else{
+					tvKnockIn.setText("낙인 : ");
+					btnKnockInPoint.setClickable(true);
+					btnKnockInPoint.setVisibility(View.VISIBLE);
+					spnKnockIn.setVisibility(View.VISIBLE);
+					tvKnockInRto.setText((String) spnKnockIn.getSelectedItem());
+				}
+				//값 변경
+				bKnockIn = !bKnockIn;
+				break;
         }
     }
 

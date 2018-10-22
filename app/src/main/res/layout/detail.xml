@@ -22,7 +22,8 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ELS 이름" />
+                android:layout_gravity="center"
+                android:text="ELS 이 름" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtElsNm"
@@ -32,6 +33,7 @@
                 android:ems="10"
                 android:hint="@string/hintName"
                 android:inputType="text"
+                android:layout_weight="1"
                 android:text="" />
         </TableRow>
 
@@ -43,7 +45,8 @@
                 android:id="@+id/tvStartDt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="청약일" />
+                android:layout_gravity="center"
+                android:text="청 약 일" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtStartDt"
@@ -67,27 +70,28 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
+
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tvEndDt"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:clickable="true"
-                android:text="만기일" />
+                android:text="만 기 일" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edtEndDt"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
                 android:ems="10"
                 android:focusable="false"
-                android:inputType="none"
-                android:layout_weight="4"
-                />
+                android:inputType="none" />
 
             <android.support.v7.widget.AppCompatImageButton
                 android:id="@+id/btnEndDt"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/date_icon" />
 
@@ -149,12 +153,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="자산3 이름/가격" />
+                android:text="자산3 이름/가격"
+                />
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spnAsset3Nm"
                 android:layout_width="0dp"
@@ -169,25 +175,85 @@
                 android:ems="10"
                 android:layout_weight="1"
                 android:inputType="number" />
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/marginM"
+            >
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="낙인 비율/no낙인" />
+                android:text="만기 / 평가주기"
+                />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnEndPeriod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/threeToOneYear"
+                />
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spnEvaluationPeriod"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/sixToThreeMonth"
+                />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/marginM">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvKnockIn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="낙인 : " />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tvKnockInRto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:text="" />
+
             <android.support.v7.widget.AppCompatSpinner
                 android:id="@+id/spnKnockIn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/fourtyToSixty"
-                />
-            <android.support.v7.widget.AppCompatCheckBox
-                android:id="@+id/chkKnockIn"
+                android:entries="@array/fourtyToSixty" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnKnockInPoint"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_weight="1"
-                 />
+                android:layout_weight="0.7"
+                android:text="0.5" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnKnockInYn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:text="낙인여부" />
+            />
+
         </TableRow>
 
     </TableLayout>
