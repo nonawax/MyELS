@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.ListViewCompat;
@@ -40,16 +41,15 @@ public class DetailActivity extends AppCompatActivity {
     EditText elsNm, edtStartDt, edtEndDt;
     ImageButton btnStartDt, btnEndDt;
     int mYear, mMonth, mDay;
-    AppCompatButton btnSave, btnCancel, btnKnockInPoint, btnKnockInYn;
-	AppCompatSpinner spnAsset1Nm,spnAsset2Nm,spnAsset3Nm, spnKnockIn;
+    AppCompatButton btnSave, btnCancel, btnKnockInPoint, btnKnockInYn, btnConditionPoint, btnInput, btnDelete;
+	AppCompatSpinner spnAsset1Nm,spnAsset2Nm,spnAsset3Nm, spnKnockIn, spnCondition;
 	List<ElsVO> listVo;	//파일에서 불러온 데이터 담을 객체
 	String detailMode;		//상세화면 모드
 	ArrayAdapter<AssetVO> adapter; //리스트뷰 어뎁터
 	AppCompatTextView tvKnockIn,tvKnockInRto;
 	int elsId;				//ELS ID
 	boolean bKnockIn = false;
-
-
+	AppCompatEditText textCondition;
 
 
     @Override
@@ -67,12 +67,17 @@ public class DetailActivity extends AppCompatActivity {
         btnCancel = (AppCompatButton)findViewById(R.id.btnCancel);
 		btnKnockInYn = (AppCompatButton)findViewById(R.id.btnKnockInYn);
 		btnKnockInPoint = (AppCompatButton)findViewById(R.id.btnKnockInPoint);
+		btnInput = (AppCompatButton)findViewById(R.id.btnInput);
+		btnDelete = (AppCompatButton)findViewById(R.id.btnDelete);
+		btnConditionPoint = (AppCompatButton)findViewById(R.id.btnConditionPoint);
 		spnAsset1Nm = (AppCompatSpinner)findViewById(R.id.spnAsset1Nm);
 		spnAsset2Nm = (AppCompatSpinner)findViewById(R.id.spnAsset2Nm);
 		spnAsset3Nm = (AppCompatSpinner)findViewById(R.id.spnAsset3Nm);
         spnKnockIn = (AppCompatSpinner)findViewById(R.id.spnKnockIn);
+        spnCondition = (AppCompatSpinner)findViewById(R.id.spnCondition);
 		tvKnockIn = (AppCompatTextView) findViewById(R.id.tvKnockIn);
         tvKnockInRto = (AppCompatTextView) findViewById(R.id.tvKnockInRto);
+        textCondition = (AppCompatEditText) findViewById(R.id.textCondition);
 
         //인텐트에서 가져오기
 		Intent intent = getIntent();
@@ -148,10 +153,28 @@ public class DetailActivity extends AppCompatActivity {
 				mOnClick(v);
 			}
 		});
-
-		//자산 1 스피너 셋팅
-		spnAsset1Nm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+		btnConditionPoint.setOnClickListener(new View.OnClickListener() {
 			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnInput.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+		btnDelete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mOnClick(v);
+			}
+		});
+
+		//상환조건 스피너 셋팅
+		spnAsset1Nm.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override //값 선택시
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
 			}
@@ -193,6 +216,7 @@ public class DetailActivity extends AppCompatActivity {
         String strElsNm = String.valueOf(elsNm.getText());
         String strStartDt = String.valueOf(edtStartDt.getText()).replaceAll("-", "");
         String strEndDt = String.valueOf(edtEndDt.getText()).replaceAll("-", "");
+		String strTextCondition = String.valueOf(textCondition.getText()).trim();
 
         switch (view.getId()) {
 			case R.id.tvStartDt:  // 청약일 날짜 버튼
@@ -270,6 +294,40 @@ public class DetailActivity extends AppCompatActivity {
 				}
 				//값 변경
 				bKnockIn = !bKnockIn;
+				break;
+
+			case R.id.btnInput : //입력버튼 클릭시:상환조건 입력버튼
+				//입력된 값이 없는 경우
+				if(strTextCondition.trim().length() > 1){
+					textCondition.setText((String) spnCondition.getSelectedItem());
+				}else{
+					//입력값이 있으면 , 추가하고
+					textCondition.setText(strTextCondition + "," + (String) spnCondition.getSelectedItem());
+				}
+				initSpnCondition();
+				break;
+
+			case R.id.btnDelete : //삭제버튼 클릭시:상환조건 삭제버튼
+				//TODO : textCondition에서 마지막 요소를 삭제
+				//입력된 값이 없는 경우
+				if(strTextCondition.trim().length() > 1){
+					Toast.makeText(getApplication(), "삭제할 상환조건이 없습니다.", Toast.LENGTH_SHORT).show();
+				}else{
+					String tempStr = strTextCondition.substring(0,strTextCondition.lastIndexOf(","));
+					textCondition.setText(tempStr);
+				}
+				initSpnCondition();
+				break;
+
+			case R.id.btnConditionPoint: //상황조건의 0.5버튼 클릭시
+				//입력된 값이 없는 경우
+				if(strTextCondition.trim().length() > 1){
+					textCondition.setText((String) spnCondition.getSelectedItem());
+				}else{
+					//입력값이 있으면 , 추가하고
+					textCondition.setText(strTextCondition + "," + ((String) spnCondition.getSelectedItem()).trim() + ".5");
+				}
+				initSpnCondition();
 				break;
         }
     }
@@ -377,6 +435,11 @@ public class DetailActivity extends AppCompatActivity {
 				edtEndDt.setText(mYear + "-" + (mMonth+1) + "-" + mDay);
 				break;
 		}
+	}
+
+	//조기상환 스피너 초기화 함수
+	private void initSpnCondition(){
+
 	}
 	//개별_함수_END
 }
